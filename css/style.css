@@ -76,6 +76,282 @@ p {
   margin-top: 0;
   margin-bottom: 1rem; }
 
+
+  #GitHub_Header::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #YouTube_Header::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #Books_Header::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #MOOCs_Header::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #Blogs_Header::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+
+  #schoolofai::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #coursera::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #edx::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #udacity::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #fastai::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #udemy::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #google::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #ucl::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #oxford::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #sherbrooke::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #edinburgh::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #ubc::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #ens::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #stanford::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #cmu::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #utexas::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #ucsd::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #cornell::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #ucf::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #columbia::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #mit::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #berkeley::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #sfu::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #upenn::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #caltech::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #harvard::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #nyu::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #pitt::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+  #khan::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+  }
+
+
 abbr[title],
 abbr[data-original-title] {
   text-decoration: underline;
