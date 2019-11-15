@@ -76,6 +76,14 @@ p {
   margin-top: 0;
   margin-bottom: 1rem; }
 
+  img {
+    width: 100%;
+  }
+  .flow-posts > div {
+    width: 50%;
+    display: inline-block;
+  }
+
 
   #GitHub_Header::before { 
     display: block; 

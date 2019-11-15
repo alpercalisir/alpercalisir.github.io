@@ -114,6 +114,21 @@
        
            
        
+
+            <h2 id="flowchart_Header" class="mb-3 mt-5">Flowcharts</h2>   
+
+              <div class="flow-posts">
+                  <div class="food-featured-posts-first">
+                      <a class="flowlogo" href="images/mlflow.png"><img src="images/ml.png"></a>
+                  </div>
+                  <div class="flow-second">
+                      <a class="flowlogo" href="images/aiflow.png"><img src="images/ai.png"></a>
+                  </div>
+                </div>
+            
+
+
+
        
             <h2 id="GitHub_Header" class="mb-3 mt-5">GitHub</h2>
             
@@ -889,6 +904,25 @@
     }
 }
   </script>
+
+<script>
+$(document).ready(function() {
+  $('.template-article img').each(function() {
+      var currentImage = $(this);
+      currentImage.wrap("<a class='image-link' href='" + currentImage.attr("src") + "'</a>");
+  });
+  $('.image-link').magnificPopup({type:'image'});  
+});
+</script>
+
+<script>
+    $(function () {
+    $('#myImg').on('click', function () {
+    $(this).width($(this).width() * 2);
+    });
+    })
+    </script>
+
 
   <script>
       var colors = ["#02383c","#393e46","black", "#230338"];
