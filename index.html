@@ -1,110 +1,416 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--[if IE 8 ]><html class="no-js oldie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
 <head>
-	<title>Alper Calisir Portfolio</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-<!--===============================================================================================-->
+
+   <!--- basic page needs
+   ================================================== -->
+   <meta charset="utf-8">
+	<title>Alper Calisir</title>
+	<meta name="description" content="">  
+	<meta name="author" content="">
+
+   <!-- mobile specific metas
+   ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+ 	<!-- CSS
+   ================================================== -->
+   <link rel="stylesheet" href="css/base.css">
+   <link rel="stylesheet" href="css/vendor.css">  
+   <link rel="stylesheet" href="css/main.css">  
+
+   <!-- script
+   ================================================== -->
+	<script src="js/modernizr.js"></script>
+	<script src="js/pace.min.js"></script>
+
+   <!-- favicons
+	================================================== -->
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
+
 </head>
-<body>
-	
-	<!--  -->
-	<div class="simpleslide100">
-	</div>
 
-	<div class="flex-col-c-sb size1 overlay1">
-		<!--  -->
-		<div class="w-full flex-w flex-sb-m p-l-80 p-r-80 p-t-22 p-lr-15-sm">
+<body id="top">
+
+	<!-- header 
+   ================================================== -->
+   <header> 
+
+   	<div class="header-logo">
+	      <a href="index.html">Alper Calisir</a>
+	   </div> 
+
+		<a id="header-menu-trigger" href="#0">
+		 	<span class="header-menu-text">Menu</span>
+		  	<span class="header-menu-icon"></span>
+		</a> 
+
+		<nav id="menu-nav-wrap">
+
+			<a href="#0" class="close-button" title="close"><span>Close</span></a>	
+
+	   	<h3>Alper Calisir</h3>  
+
+			<ul class="nav-list">
+				<li class="current"><a class="smoothscroll" href="#home" title="">Home</a></li>
+				<li><a class="smoothscroll" href="#services" title="">Experience</a></li>
+				<li><a class="smoothscroll" href="#contact" title="">Contact</a></li>						
+			</ul>	
+
 			
-			<div class="flex-w m-t-10 m-b-10" style="display: block;
-			margin: 0 auto;
-			text-align: center;">
-				<a href="aipathway.html" class="size2 m1-txt1 flex-c-m how-btn1 trans-04">
-					AI Pathway
-				</a>
+
+			<ul class="header-social-list">
+	         <li>
+	         	<a href="https://github.com/calisir"><i class="fa fa-github"></i></a>
+	         </li>
+	         <li>
+	         	<a href="https://twitter.com/alpercalisir"><i class="fa fa-twitter"></i></a>
+	         </li>
+	         <li>
+	         	<a href="https://medium.com/@calisir"><i class="fa fa-medium"></i></a>
+			 </li>
+			 <li>
+				<a href="https://www.linkedin.com/in/calisir/"><i class="fa fa-linkedin"></i></a>
+			</li>        
+		  </ul>		
+		  
+
+
+		</nav>  <!-- end #menu-nav-wrap -->
+
+	</header> <!-- end header -->  
+
+
+   <!-- home
+   ================================================== -->
+   <section id="home">
+
+   	<div class="overlay"></div>
+
+   	<div class="home-content-table">	
+		   <div class="home-content-tablecell">
+		   	<div class="row">
+		   		<div class="col-twelve">		   			
+			  		
+			  				
+				  			<h1 class="animate-intro">
+							Alper Calisir
+				  			</h1>	
+
+				  								
+
+			  		</div> <!-- end col-twelve --> 
+		   	</div> <!-- end row --> 
+		   </div> <!-- end home-content-tablecell --> 		   
+		</div> <!-- end home-content-table -->
+
+		<ul class="home-social-list">
+	      <li class="animate-intro">
+	        	<a href="https://github.com/calisir"><i class="fa fa-github"></i></a>
+	      </li>
+	      <li class="animate-intro">
+	        	<a href="https://twitter.com/alpercalisir"><i class="fa fa-twitter"></i></a>
+	      </li>
+	      <li class="animate-intro">
+	        	<a href="https://medium.com/@calisir"><i class="fa fa-medium"></i></a>
+		  </li>
+		  <li class="animate-intro">
+			<a href="https://www.linkedin.com/in/calisir/"><i class="fa fa-linkedin"></i></a>
+	  </li>
+	   </ul> <!-- end home-social-list -->	
+
+		<div class="scrolldown">
+			<a href="#about" class="scroll-icon smoothscroll">		
+		   	Scroll Down		   	
+		   	<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+			</a>
+		</div>			
+   
+   </section> <!-- end home -->
+
+
+
+   <!-- about
+   ================================================== -->
+   <section id="services">
+
+   	<div class="overlay"></div>
+   	<div class="gradient-overlay"></div>
+   	
+   	<div class="row narrow section-intro with-bottom-sep animate-this">
+   		<div class="col-full">
+   			
+   				<h3>Experience</h3>
+   			   <h1>Education</h1>
+   			   			
+   	   </div> <!-- end col-full -->
+   	</div> <!-- end row -->
+
+   	<div class="row services-content">
+
+   		<div class="services-list block-1-2 block-tab-full group">
+
+	      	<div class="bgrid service-item animate-this">	
+
+
+
+	            <div class="service-content">
+					<h3 class="h05">MSc - Artificial Intelligence and Robotics</h3>	    
+					<img src="images/sapienza.png" style=" position: relative; top: -120px;"></img>     		
+	         	</div> 	         	 
+
+			</div> <!-- end bgrid -->
+				
+			<div class="bgrid service-item animate-this">	
+
+	            <div class="service-content">	
+	            	<h3 class="h05">BSc - Computer Engineering</h3>  
+					<img src="images/metu.png" width="200" height="300"></img>
+						
+	            </div>	                          
+
+			</div> <!-- end bgrid -->
+
+
+			
+
+		   
+
+		  </div> <!-- end services-list -->
+		  
+		  <div class="row narrow section-intro with-bottom-sep animate-this">
+			<div class="col-full">
+				
+					<h3>Experience</h3>
+				   <h1>Positions</h1>
+							   
+		   </div> <!-- end col-full -->
+		</div> <!-- end row -->
+
+		  <div class="services-list block-1-2 block-tab-full group">
+
+			<div class="bgrid service-item animate-this">	  
+				<div class="service-content">	
+					<h1 style="color:white;">Full Stack Engineer, Intern</h1>  
+					<h3 class="h05">Udentify</h3>  
+					<p> JUN 2018 - SEP 2018
+					</p>	         		
+				</div>	                          
+			 </div> <!-- end bgrid -->
+
+
+			 <div class="bgrid service-item animate-this">	  
+				<div class="service-content">	
+					<h1 style="color:white;">Software Engineer, Intern</h3>  
+					<h3 class="h05">Intertech</h3>  
+					<p> JUL 2017 - AUG 2017
+					</p>	         		
+				</div>	                          
+			 </div> <!-- end bgrid -->
+
+
+			 <div class="bgrid service-item animate-this">	  
+				<div class="service-content">	
+					<h1 style="color:white;">Frontend Developer, Intern</h3>  
+					<h3 class="h05">E-Bursum.com</h3>  
+					<p> JUN 2016 - JUL 2016
+					</p>	         		
+				</div>	                          
+			 </div> <!-- end bgrid -->
+
+			  <div class="bgrid service-item animate-this">	
+				<div class="service-content">	
+					<h1 style="color:white;">Research Assistant</h3>  
+					<h3 class="h05">METU</h3>  
+					<p> OCT 2016 - JAN 2017
+					</p>	         		
+				</div>	                          
+			 </div> <!-- end bgrid -->
+
+
+		</div> <!-- end services-list -->
+
+
+
+
+
+
+
+
+
+	</div> <!-- end services-list -->
+		  
+	<div class="row narrow section-intro with-bottom-sep animate-this">
+	  <div class="col-full">
+		  
+			  <h3>Experience</h3>
+			 <h1>Talks</h1>
+						 
+	 </div> <!-- end col-full -->
+  </div> <!-- end row -->
+
+	<div class="services-list block-1-2 block-tab-full group">
+
+
+	
+		<div class="bgrid service-item animate-this">	  
+		<div class="service-content">	
+			<h1 style="color:white;">Fact Checking Indexer</h1>  
+			<h3 style="color:white;"><a href="https://drive.google.com/file/d/1QwIy_btShSuy2MZyxjYSYDIvD6l1cyuz/view?usp=sharing">Presentation</a></h1> 
+		</div>	                          
+		</div> <!-- end bgrid -->
+
+		<div class="bgrid service-item animate-this">	  
+			<div class="service-content">	
+				<h1 style="color:white;">Manipulating the Multivariate Gaussian Density</h1>  
+				<h3 style="color:white;"><a href="https://drive.google.com/file/d/17LKa8Bw13EYfW6IkhIPTt65N4q4C-nJa/view?usp=sharing">Presentation</a></h1> 
+			</div>	                          
+			</div> <!-- end bgrid -->
+	
+
+	  <div class="bgrid service-item animate-this">	  
+		  <div class="service-content">	
+			  <h1 style="color:white;">802.11p // DSRC </h1>  
+			  <h3 style="color:white;"><a href="https://drive.google.com/file/d/131TkIa6MdXgpFMokuAS0WAGpBhmVmCo1/view?usp=sharing">Presentation</a></h1> 
+		  </div>	                          
+	   </div> <!-- end bgrid -->
+
+	   <div class="bgrid service-item animate-this">	  
+		<div class="service-content">	
+			<h1 style="color:white;">Face Recognition Based Attendance Taking</h1>  
+			<h3 style="color:white;"><a href="https://drive.google.com/file/d/1NBFDISLFPa9SGWhBsFckTM_fhi2oZk8m/view?usp=sharing">Presentation</a></h1> 
+		</div>	                          
+		</div> <!-- end bgrid -->
+
+	   <div class="bgrid service-item animate-this">	  
+		<div class="service-content">	
+			<h1 style="color:white;">Comparing CPU Scheduling Algorithms</h1>  
+			<h3 style="color:white;"><a href="https://drive.google.com/file/d/1wzvCTWOQeEVoQ8Vzt51HvCgk-AOnaZNS/view?usp=sharing">Presentation</a></h1> 
+		</div>	                          
+	 </div> <!-- end bgrid -->
+
+
+	 <div class="bgrid service-item animate-this">	  
+		<div class="service-content">	
+			<h1 style="color:white;">PUBG Finish Placement Prediction</h1>  
+			<h3 style="color:white;"><a href="https://drive.google.com/file/d/1izezbnzIsozAPdz7-oUcvFlqulJ3OrqE/view?usp=sharing">Presentation</a></h1> 
+		</div>	                          
+	 </div> <!-- end bgrid -->
+
+
+	 <div class="bgrid service-item animate-this">	  
+		<div class="service-content">	
+			<h1 style="color:white;">Home Automation using Web Application over Wi-Fi</h1>  
+			<h3 style="color:white;"><a href="https://drive.google.com/file/d/1pd-VLA4bQVCkQ3lBfw00M9MCSDOYHhYE/view?usp=sharing">Presentation</a></h1> 
+		</div>	                          
+	 </div> <!-- end bgrid -->
+
+
+  </div> <!-- end services-list -->
+
+
+
+
+
+   		
+   	</div> <!-- end services-content -->   			
+
+   </section> <!-- end services -->
+
+
+
+
+
+
+	<!-- contact
+   ================================================== -->
+   <section id="contact">
+
+      <div class="overlay"></div>
+
+		<div class="row narrow section-intro with-bottom-sep animate-this">
+   		<div class="col-twelve">
+   			<h3>Contact</h3>
+   			<h1>Get In Touch.</h1>
+
+   		</div> 
+   	</div> <!-- end section-intro -->
+
+   	<div class="row contact-content">
+
+         <div class="col-four tab-full contact-info end animate-this">
+
+	   		<div class="cinfo">
+	   			<h6>Email</h6>
+	   			<p>
+	   				calisir.bugra@gmail.com	     
+				   </p>
+	   		</div> <!-- end cinfo -->
+
+	   		<div class="cinfo">
+				   <h6>Phone</h6>
+				<p>
+					<img src="images/italy.png" style="width:30px;height:30px; position: relative; top: 10px;"></img>   +39 347 973 78 52
+				</p>
+				<p>
+					<img src="images/turkey.png" style="width:30px;height:30px; position: relative; top: 10px;" ></img>   +90 541 508 58 99
+				</p>
+	   		</div>
+
+			<div class="cinfo">
+				<h6>Index</h6>
+				<p>
+					<a class="button button-primary full-width" href="https://calisir.github.io/aipathway.html">AI Pathway</a>
+					<a class="button button-primary full-width" href="https://medium.com/haftal%C4%B1k-yapay-zeka-b%C3%BClteni">AI Newsletter(Turkish)</a>
+				</p>
 			</div>
+         </div> <!-- end cinfo --> 
 
-			
-		</div>
-
-		<!--  -->
-		<div class="flex-col-c-m p-l-15 p-r-15 p-t-50 p-b-120">
-			<h3 class="l1-txt1 txt-center p-b-40 respon1">
-				My GitHub Portfolio will be here someday!
-			</h3>
-
-		</div>
-
-		<!--  -->
-		<div class="flex-w flex-c-m p-b-35">
-			<a href="https://www.linkedin.com/in/calisir/" class="size3 flex-c-m how-social trans-04 m-r-3 m-l-3 m-b-5">
-				<i class="fa fa-linkedin"></i>
-			</a>
-
-			<a href="https://twitter.com/alpercalisir" class="size3 flex-c-m how-social trans-04 m-r-3 m-l-3 m-b-5">
-				<i class="fa fa-twitter"></i>
-			</a>
-
-			<a href="https://medium.com/@calisir" class="size3 flex-c-m how-social trans-04 m-r-3 m-l-3 m-b-5">
-				<i class="fa fa-medium"></i>
-			</a>
-			
-		</div>
-	</div>
+   	</div> <!-- end row contact-content -->
+		
+	</section> <!-- end contact -->
 
 
+	<!-- footer
+   ================================================== -->
+	<footer>
+     
 
-	
+   	<div class="footer-bottom">
 
-<!--===============================================================================================-->	
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/countdowntime/moment.min.js"></script>
-	<script src="vendor/countdowntime/moment-timezone.min.js"></script>
-	<script src="vendor/countdowntime/moment-timezone-with-data.min.js"></script>
-	<script src="vendor/countdowntime/countdowntime.js"></script>
-	<script>
-		$('.cd100').countdown100({
-			/*Set Endtime here*/
-			/*Endtime must be > current time*/
-			endtimeYear: 0,
-			endtimeMonth: 0,
-			endtimeDate: 35,
-			endtimeHours: 19,
-			endtimeMinutes: 0,
-			endtimeSeconds: 0,
-			timeZone: "" 
-			// ex:  timeZone: "America/New_York"
-			//go to " http://momentjs.com/timezone/ " to get timezone
-		});
-	</script>
-<!--===============================================================================================-->
-	<script src="vendor/tilt/tilt.jquery.min.js"></script>
-	<script >
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
-	</script>
-<!--===============================================================================================-->
-	<script src="js/main.js"></script>
+      	<div class="row">
+
+      		<div class="col-twelve">
+	      		<div class="copyright">
+		         	<span>© Copyright Infinity 2016.</span> 
+		         	<span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>		         	
+		         </div>		               
+	      	</div>
+
+      	</div>   	
+
+      </div> <!-- end footer-bottom -->
+
+      <div id="go-top">
+		   <a class="smoothscroll" title="Back to Top" href="#top">
+		   	<i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+		   </a>
+		</div>		
+   </footer>
+
+   <div id="preloader"> 
+    	<div id="loader"></div>
+   </div> 
+
+   <!-- Java Script
+   ================================================== --> 
+   <script src="js/jquery-2.1.3.min.js"></script>
+   <script src="js/plugins.js"></script>
+   <script src="js/main.js"></script>
 
 </body>
+
 </html>
