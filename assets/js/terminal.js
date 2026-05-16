@@ -294,7 +294,7 @@ const commands = {
       ];
       const matches = searchable.filter(s => s.keywords.some(k => k.includes(term) || term.includes(k)));
       if (matches.length === 0) {
-        return `\n  <span class="muted">no results for "${term}"</span>\n  try: tools, contact\n`;
+        return `\n  <span class="muted">no results for "${term}"</span>\n  try: contact\n`;
       }
       let output = `\n  <span class="bold white">results for "${term}":</span>\n\n`;
       matches.forEach(m => {
@@ -1359,22 +1359,21 @@ async function boot() {
   }
   output.innerHTML += '\n';
 
-  output.innerHTML += `<span class="accent ascii-art">
+//   output.innerHTML += `<span class="accent ascii-art">
   
- █████╗ ██╗     ██████╗ ███████╗██████╗      ██████╗ █████╗ ██╗     ██╗███████╗██╗██████╗ 
-██╔══██╗██║     ██╔══██╗██╔════╝██╔══██╗    ██╔════╝██╔══██╗██║     ██║██╔════╝██║██╔══██╗
-███████║██║     ██████╔╝█████╗  ██████╔╝    ██║     ███████║██║     ██║███████╗██║██████╔╝
-██╔══██║██║     ██╔═══╝ ██╔══╝  ██╔══██╗    ██║     ██╔══██║██║     ██║╚════██║██║██╔══██╗
-██║  ██║███████╗██║     ███████╗██║  ██║    ╚██████╗██║  ██║███████╗██║███████║██║██║  ██║
-╚═╝  ╚═╝╚══════╝╚═╝     ╚══════╝╚═╝  ╚═╝     ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚═╝╚═╝  ╚═╝
+//  █████╗ ██╗     ██████╗ ███████╗██████╗      ██████╗ █████╗ ██╗     ██╗███████╗██╗██████╗ 
+// ██╔══██╗██║     ██╔══██╗██╔════╝██╔══██╗    ██╔════╝██╔══██╗██║     ██║██╔════╝██║██╔══██╗
+// ███████║██║     ██████╔╝█████╗  ██████╔╝    ██║     ███████║██║     ██║███████╗██║██████╔╝
+// ██╔══██║██║     ██╔═══╝ ██╔══╝  ██╔══██╗    ██║     ██╔══██║██║     ██║╚════██║██║██╔══██╗
+// ██║  ██║███████╗██║     ███████╗██║  ██║    ╚██████╗██║  ██║███████╗██║███████║██║██║  ██║
+// ╚═╝  ╚═╝╚══════╝╚═╝     ╚══════╝╚═╝  ╚═╝     ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚═╝╚═╝  ╚═╝
                                                                                           
 
-  </span>
-`;
+//   </span>
+// `;
   await sleep(100);
 
   output.innerHTML += `
-  builder. wonderer. student.
   welcome to my cli. type <span class="cmd">help</span> to see commands.
 
 `;
