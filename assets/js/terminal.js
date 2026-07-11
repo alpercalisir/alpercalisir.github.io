@@ -39,6 +39,11 @@ const vibes = [
 // Available themes
 const themes = ["midnight", "phosphor", "amber", "matrix", "contrast"];
 
+// Life RPG stat chart (shared save file with rpg.html via localStorage)
+const RPG_STORE_KEY = "life-rpg-v1";
+const RPG_THRESHOLDS = { VIT: 20, INT: 75, GLD: 8, CHA: 14, DIS: 25, MND: 25, PLY: 8 };
+const RPG_BASE = { VIT: 6, INT: 3, GLD: 6, CHA: 6, DIS: 4, MND: 7, PLY: 5 };
+
 // Commands registry
 const commands = {
   help: {
@@ -53,14 +58,21 @@ const commands = {
         '  <span class="cmd">tldr</span>          ultra-short bio',
         '  <span class="cmd">now</span>           what im doing',
         '  <span class="cmd">prev</span>          previous work',
+        '  <span class="cmd">certificates</span>  certifications',
+        '  <span class="cmd">courses</span>       courses taken',
         "",
         '  <span class="muted">--- content ---</span>',
         '  <span class="cmd">search [term]</span> search site content',
+        '  <span class="cmd">blog [slug]</span>  read blog posts',
         '  <span class="cmd">tetris</span>        :)',
         "",
         '  <span class="muted">--- contact ---</span>',
         '  <span class="cmd">contact</span>       find me online',
         '  <span class="cmd">newsletter</span>    subscribe to alper\'s newsletter',
+        "",
+        '  <span class="muted">--- life rpg ---</span>',
+        '  <span class="cmd">level</span>         character stat chart',
+        '  <span class="cmd">rpg</span>           open the quest tracker (password protected)',
         "",
         '  <span class="muted">--- terminal ---</span>',
         '  <span class="cmd">theme</span>         list/change themes',
@@ -124,6 +136,62 @@ const commands = {
   history: {
     desc: "alias for prev",
     fn: () => commands.prev.fn(),
+  },
+  certificates: {
+    desc: "certifications",
+    fn: () => {
+      const certs = [
+        { name: "Object Oriented Programming in C#", instructor: "U2U", issuer: "U2U", date: "December 2023" },
+        // { name: "Certificate Name", instructor: "Instructor Name", issuer: "Issuing Org", date: "2026", link: "https://..." },
+      ];
+      if (certs.length === 0) {
+        return `
+  <span class="bold white">certificates:</span>
+  <span class="muted">none listed yet — check back soon.</span>
+`;
+      }
+      let output = '\n  <span class="bold white">certificates:</span>\n\n';
+      certs.forEach((c) => {
+        const linkPart = c.link
+          ? ` <a href="${c.link}" target="_blank" rel="noopener">link</a>`
+          : "";
+        const instructorPart = c.instructor ? ` by ${c.instructor}` : "";
+        output += `  • ${c.name}${instructorPart} — <span class="muted">${c.issuer}, ${c.date}</span>${linkPart}\n`;
+      });
+      return output;
+    },
+  },
+  certs: {
+    desc: "alias for certificates",
+    fn: () => commands.certificates.fn(),
+  },
+  courses: {
+    desc: "courses taken",
+    fn: () => {
+      const courses = [
+        { name: "Introduction to Claude", instructor: "Jon Friskics", issuer: "Pluralsight", date: "July 2026" },
+        // { name: "Course Name", instructor: "Instructor Name", issuer: "Platform", date: "2026", link: "https://..." },
+      ];
+      if (courses.length === 0) {
+        return `
+  <span class="bold white">courses:</span>
+  <span class="muted">none listed yet — check back soon.</span>
+`;
+      }
+      let output = '\n  <span class="bold white">courses:</span>\n\n';
+      courses.forEach((c) => {
+        const linkPart = c.link
+          ? ` <a href="${c.link}" target="_blank" rel="noopener">link</a>`
+          : "";
+        const instructorPart = c.instructor ? ` by ${c.instructor}` : "";
+        output += `  • ${c.name}${instructorPart} — <span class="muted">${c.issuer}, ${c.date}</span>${linkPart}\n`;
+      });
+      return output;
+    },
+  },
+  course: {
+    desc: "alias for courses",
+    fn: () => commands.courses.fn(),
   },
   contact: {
     desc: "find me",
@@ -279,6 +347,55 @@ const commands = {
       return '\n  <span class="success">opening alper\'s newsletter...</span>\n';
     },
   },
+  rpg: {
+    desc: "open the life rpg quest tracker",
+    fn: () => {
+      window.open('rpg.html', '_blank');
+      return '\n  <span class="success">opening quest tracker...</span>\n  <span class="muted">password protected — type</span> <span class="cmd">level</span> <span class="muted">for a read-only stat chart</span>\n';
+    },
+  },
+  life: {
+    desc: "alias for rpg",
+    fn: () => commands.rpg.fn(),
+  },
+  level: {
+    desc: "character stat chart",
+    fn: () => {
+      let saved = null;
+      try {
+        const raw = localStorage.getItem(RPG_STORE_KEY);
+        if (raw) saved = JSON.parse(raw);
+      } catch (e) {}
+      const levels = saved && saved.levels ? saved.levels : RPG_BASE;
+      const statXP = saved && saved.statXP ? saved.statXP : {};
+
+      let output = '\n  <span class="bold white">CHARACTER STATS</span>\n\n';
+      Object.keys(RPG_BASE).forEach((s) => {
+        const lvl = levels[s] ?? RPG_BASE[s];
+        const xp = statXP[s] || 0;
+        const th = RPG_THRESHOLDS[s];
+        let bar = "";
+        for (let i = 1; i <= 10; i++) {
+          if (i <= lvl) {
+            bar += i > RPG_BASE[s] ? '<span class="success">█</span>' : '<span class="accent">█</span>';
+          } else {
+            bar += '<span class="muted">░</span>';
+          }
+        }
+        output += `  ${s.padEnd(4)} ${bar}  <span class="accent">${String(lvl).padStart(2)}</span>/10  <span class="muted">${xp}/${th} xp</span>\n`;
+      });
+
+      const lvls = Object.keys(RPG_BASE).map((s) => levels[s] ?? RPG_BASE[s]);
+      const ovr = (lvls.reduce((a, b) => a + b, 0) / lvls.length).toFixed(1);
+      output += `\n  <span class="muted">overall</span> <span class="accent">LV ${ovr}</span>\n`;
+
+      if (!saved) {
+        output += '\n  <span class="muted">no save file on this device — showing base stats</span>\n';
+      }
+      output += '\n  <span class="muted">type</span> <span class="cmd">rpg</span> <span class="muted">to open the full tracker</span>\n';
+      return output;
+    },
+  },
   search: {
     desc: "search site content",
     fn: (args) => {
@@ -290,7 +407,11 @@ const commands = {
         { cmd: 'whoami', keywords: ['alper', 'calisir'] },
         { cmd: 'now', keywords: ['github', 'devtools', 'infra', 'newsletter'] },
         { cmd: 'prev', keywords: ['kwantis', 'metu', 'odtu', 'sapienza'] },
+        { cmd: 'certificates', keywords: ['certificate', 'certification', 'certs', 'credential'] },
+        { cmd: 'courses', keywords: ['course', 'class', 'training'] },
         { cmd: 'contact', keywords: ['twitter', 'linkedin', 'github', 'email', 'social'] },
+        { cmd: 'rpg', keywords: ['rpg', 'quest', 'tracker', 'life', 'game'] },
+        { cmd: 'level', keywords: ['level', 'stats', 'stat', 'rpg', 'xp'] },
       ];
       const matches = searchable.filter(s => s.keywords.some(k => k.includes(term) || term.includes(k)));
       if (matches.length === 0) {
@@ -301,6 +422,101 @@ const commands = {
         output += `  • type <span class="cmd">${m.cmd}</span>\n`;
       });
       return output;
+    },
+  },
+  blog: {
+    desc: "read blog posts",
+    fn: async (args) => {
+      try {
+        // Fetch blog posts metadata
+        const response = await fetch('blog/posts.json');
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} when fetching posts.json`);
+        }
+        
+        let posts;
+        try {
+          posts = await response.json();
+        } catch (e) {
+          throw new Error(`Invalid JSON in posts.json: ${e.message}`);
+        }
+
+        if (!Array.isArray(posts)) {
+          throw new Error('posts.json must contain an array');
+        }
+
+        if (!args || args.length === 0) {
+          // List all posts, sorted by date descending (newest first)
+          const sortedPosts = [...posts].sort((a, b) => {
+            return new Date(b.date) - new Date(a.date);
+          });
+          
+          let output = '\n  <span class="bold white">📝 Blog Posts</span>\n\n';
+          if (sortedPosts.length === 0) {
+            output += '  <span class="muted">no posts yet</span>\n';
+          } else {
+            sortedPosts.forEach(post => {
+              output += `  • <span class="cmd">${post.slug}</span> — ${post.title} (${post.date})\n`;
+            });
+          }
+          output += `\n  <span class="muted">usage: blog [slug]</span>\n`;
+          return output;
+        }
+
+        // Display specific post
+        const slug = args[0];
+        const post = posts.find(p => p.slug === slug);
+        if (!post) {
+          return `\n  <span class="error">post not found: ${slug}</span>\n`;
+        }
+
+        // Fetch markdown content
+        const mdResponse = await fetch(`blog/posts/${slug}.md`);
+        if (!mdResponse.ok) {
+          throw new Error(`HTTP ${mdResponse.status} when fetching ${slug}.md`);
+        }
+        
+        const markdown = await mdResponse.text();
+
+        // Parse markdown to HTML (marked is loaded globally from CDN)
+        if (typeof marked === 'undefined') {
+          throw new Error('Markdown parser not loaded - check browser console');
+        }
+        const html = marked.parse(markdown);
+
+        // Convert HTML to terminal-friendly format with CSS classes
+        let output = '\n  <span class="bold white">' + post.title + '</span>\n';
+        output += '  <span class="muted">' + post.date + '</span>\n\n';
+        
+        // Convert HTML content to terminal text with styling
+        const lines = html
+          .split('\n')
+          .map(line => {
+            // Convert h1-h3 to bold white
+            line = line.replace(/<h[123]>/g, '<span class="bold white">').replace(/<\/h[123]>/g, '</span>');
+            // Convert strong to bold
+            line = line.replace(/<strong>/g, '<span class="bold">').replace(/<\/strong>/g, '</span>');
+            // Convert em to muted
+            line = line.replace(/<em>/g, '<span class="muted">').replace(/<\/em>/g, '</span>');
+            // Remove p tags but keep content
+            line = line.replace(/<p>/g, '').replace(/<\/p>/g, '');
+            // Convert ul/li to bullet points
+            line = line.replace(/<ul>/g, '').replace(/<\/ul>/g, '');
+            line = line.replace(/<li>/g, '  • ').replace(/<\/li>/g, '');
+            // Convert code blocks
+            line = line.replace(/<code>/g, '<span class="cmd">').replace(/<\/code>/g, '</span>');
+            // Remove other tags
+            line = line.replace(/<[^>]*>/g, '');
+            return '  ' + line.trim();
+          })
+          .filter(line => line.trim() !== '  ');
+
+        output += lines.join('\n') + '\n';
+        return output;
+      } catch (err) {
+        console.error('Blog error:', err);
+        return '\n  <span class="error">failed to load blog: ' + err.message + '</span>\n';
+      }
     },
   },
   tldr: {
