@@ -1,34 +1,34 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <title>Yazı alanı — Alper Calisir</title>
-  <link rel="stylesheet" href="styles.css?v=rich-paste-20260929">
+  <title>Writing desk — Alper Calisir</title>
+  <link rel="stylesheet" href="styles.css?v=english-20260929">
 </head>
 <body data-page="write">
   <main class="editor-shell">
-    <header class="editor-top"><a class="brand" href="index.html">alper calisir · yazılar</a><div class="editor-actions"><span data-user></span><button class="button ghost" type="button" data-logout hidden>Çıkış</button><a class="button" href="index.html" data-open-post hidden>Yazıyı gör</a></div></header>
+    <header class="editor-top"><a class="brand" href="index.html">alper calisir · stories</a><div class="editor-actions"><span data-user></span><button class="button ghost" type="button" data-logout hidden>Sign out</button><a class="button" href="index.html" data-open-post hidden>View story</a></div></header>
     <div class="notice" data-notice hidden></div>
     <section class="page narrow" data-login-panel hidden>
-      <div class="eyebrow">Yazar alanı</div><h1>Yazmaya başla.</h1><p class="intro">Hesabınla giriş yap ve yazını düzenleyip yayınla.</p>
-      <form class="auth-card" data-login-form><h2>Giriş yap</h2><p>Yazar hesabı Supabase panelinden önceden oluşturulur.</p><label class="field-label" for="email">E-posta</label><input class="field" id="email" name="email" type="email" autocomplete="username" required><label class="field-label" for="password">Şifre</label><input class="field" id="password" name="password" type="password" autocomplete="current-password" required><button class="button" type="submit">Giriş yap</button></form>
+      <div class="eyebrow">Writer dashboard</div><h1>Start writing.</h1><p class="intro">Sign in to draft, edit, and publish your stories.</p>
+      <form class="auth-card" data-login-form><h2>Sign in</h2><p>Your author account is created in the Supabase dashboard.</p><label class="field-label" for="email">Email</label><input class="field" id="email" name="email" type="email" autocomplete="username" required><label class="field-label" for="password">Password</label><input class="field" id="password" name="password" type="password" autocomplete="current-password" required><button class="button" type="submit">Sign in</button></form>
     </section>
     <section data-writer-panel hidden>
       <div class="editor-main">
-        <div class="toolbar"><span data-save-state>Değişiklikler otomatik olarak bu cihaza kaydedilir</span><button class="button ghost" type="button" data-new>Yeni yazı</button></div>
-        <textarea class="editor-title" data-title rows="2" placeholder="Başlık" aria-label="Yazı başlığı"></textarea>
-        <textarea class="editor-excerpt" data-excerpt placeholder="Kısa bir giriş yazısı ekle…" aria-label="Yazı özeti"></textarea>
-        <div class="toolbar"><div class="switch"><button type="button" class="active" data-mode="write">Yaz</button><button type="button" data-mode="preview">Önizleme</button></div><span>Biçimlendirme yapıştırınca korunur</span></div>
-        <div class="format-bar" role="toolbar" aria-label="Metin biçimlendirme"><span class="format-label">Biçimlendir</span><button type="button" data-format="bold" aria-label="Kalın" title="Kalın"><strong>B</strong></button><button type="button" data-format="italic" aria-label="İtalik" title="İtalik"><em>I</em></button><button type="button" data-format="inline-code" aria-label="Satır içi kod" title="Satır içi kod"><code>`&lt;/&gt;`</code></button><button type="button" data-format="code-block" aria-label="Kod bloğu ekle" title="Kod bloğu ekle">&lt;/&gt; Kod bloğu</button></div>
-        <div class="editor-body" data-editor-body contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Yazı içeriği" data-placeholder="Aklındaki fikirleri yaz…"></div>
+        <div class="toolbar"><span data-save-state>Changes are saved automatically on this device</span><button class="button ghost" type="button" data-new>New story</button></div>
+        <textarea class="editor-title" data-title rows="2" placeholder="Title" aria-label="Story title"></textarea>
+        <textarea class="editor-excerpt" data-excerpt placeholder="Add a short introduction…" aria-label="Story introduction"></textarea>
+        <div class="toolbar"><div class="switch"><button type="button" class="active" data-mode="write">Write</button><button type="button" data-mode="preview">Preview</button></div><span>Formatting is preserved when you paste</span></div>
+        <div class="format-bar" role="toolbar" aria-label="Text formatting"><span class="format-label">Format</span><button type="button" data-format="bold" aria-label="Bold" title="Bold"><strong>B</strong></button><button type="button" data-format="italic" aria-label="Italic" title="Italic"><em>I</em></button><button type="button" data-format="inline-code" aria-label="Inline code" title="Inline code"><code>`&lt;/&gt;`</code></button><button type="button" data-format="code-block" aria-label="Insert code block" title="Insert code block">&lt;/&gt; Code block</button></div>
+        <div class="editor-body" data-editor-body contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Story content" data-placeholder="Start writing…"></div>
         <div class="preview" data-preview hidden></div>
-        <div class="toolbar"><span>Taslaklar hesabında saklanır.</span><div class="editor-actions"><button class="button secondary" type="button" data-save>Taslağı kaydet</button><button class="button" type="button" data-publish>Yayınla</button></div></div>
+        <div class="toolbar"><span>Drafts are saved to your account.</span><div class="editor-actions"><button class="button secondary" type="button" data-save>Save draft</button><button class="button" type="button" data-publish>Publish</button></div></div>
         <div class="post-list" data-dashboard-posts></div>
       </div>
     </section>
   </main>
-  <script src="config.js"></script><script src="app.js?v=rich-paste-20260929"></script>
+  <script src="config.js"></script><script src="app.js?v=english-20260929"></script>
 </body>
 </html>

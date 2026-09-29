@@ -25,13 +25,13 @@
   }
 
   async function api(path, options = {}, authenticated = false) {
-    if (!ready) throw new Error('Yayın sistemi henüz yapılandırılmamış. Kurulum için blog/SETUP.md dosyasına bakın.');
+    if (!ready) throw new Error('Publishing is not configured yet. See blog/SETUP.md for setup steps.');
     const headers = { apikey: config.supabaseAnonKey, 'Content-Type': 'application/json', ...(options.headers || {}) };
     if (authenticated && session?.access_token) headers.Authorization = `Bearer ${session.access_token}`;
     const response = await fetch(`${apiBase}${path}`, { ...options, headers });
     const text = await response.text();
     const result = text ? JSON.parse(text) : null;
-    if (!response.ok) throw new Error(result?.msg || result?.message || result?.error_description || result?.hint || result?.details || result?.error || `İstek başarısız (${response.status})`);
+    if (!response.ok) throw new Error(result?.msg || result?.message || result?.error_description || result?.hint || result?.details || result?.error || `Request failed (${response.status})`);
     return result;
   }
 
@@ -176,11 +176,11 @@
   }
 
   function slugify(text) {
-    return String(text || '').toLocaleLowerCase('tr').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/ı/g, 'i').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 80) || 'yeni-yazi';
+    return String(text || '').toLocaleLowerCase('tr').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/ı/g, 'i').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 80) || 'new-story';
   }
 
   function dateLabel(value) {
-    return new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(value));
+    return new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(value));
   }
 
   async function loadPosts() {
@@ -197,14 +197,14 @@
 
     const search = document.querySelector('[data-search]');
     const render = () => {
-      const query = search.value.trim().toLocaleLowerCase('tr');
-      const visiblePosts = posts.filter(post => `${post.title} ${post.excerpt} ${post.content}`.toLocaleLowerCase('tr').includes(query));
-      count.textContent = visiblePosts.length ? `${visiblePosts.length} yazı` : '';
+      const query = search.value.trim().toLocaleLowerCase();
+      const visiblePosts = posts.filter(post => `${post.title} ${post.excerpt} ${post.content}`.toLocaleLowerCase().includes(query));
+      count.textContent = visiblePosts.length ? `${visiblePosts.length} ${visiblePosts.length === 1 ? 'story' : 'stories'}` : '';
       if (!visiblePosts.length) {
         const isSearch = Boolean(query);
-        const title = loadFailed ? 'Yazılar şu an yüklenemiyor.' : isSearch ? 'Bir şey bulamadık.' : 'İlk yazı yolda.';
-        const message = loadFailed ? 'Biraz sonra yeniden deneyebilirsin.' : isSearch ? 'Başka bir kelimeyle aramayı deneyebilirsin.' : 'Alper yeni yazılar hazırlıyor. Yayınlandıklarında burada görebilirsin.';
-        list.innerHTML = `<div class="empty-state"><div class="empty-art" aria-hidden="true">${loadFailed ? '↻' : isSearch ? '⌕' : '✳'}</div><h3>${title}</h3><p>${message}</p>${isSearch && !loadFailed ? '<button class="text-link clear-search" type="button" data-clear-search>Aramayı temizle <span aria-hidden="true">→</span></button>' : '<a class="text-link" href="../">Ana sayfaya dön <span aria-hidden="true">→</span></a>'}</div>`;
+        const title = loadFailed ? 'Stories are unavailable right now.' : isSearch ? 'No stories found.' : 'The first story is on its way.';
+        const message = loadFailed ? 'Please try again in a little while.' : isSearch ? 'Try searching for another phrase.' : 'Alper is working on new stories. Check back soon.';
+        list.innerHTML = `<div class="empty-state"><div class="empty-art" aria-hidden="true">${loadFailed ? '↻' : isSearch ? '⌕' : '✳'}</div><h3>${title}</h3><p>${message}</p>${isSearch && !loadFailed ? '<button class="text-link clear-search" type="button" data-clear-search>Clear search <span aria-hidden="true">→</span></button>' : '<a class="text-link" href="../">Back to home <span aria-hidden="true">→</span></a>'}</div>`;
         list.querySelector('[data-clear-search]')?.addEventListener('click', () => { search.value = ''; render(); search.focus(); });
         return;
       }
@@ -214,7 +214,7 @@
         plainContent.innerHTML = rawContent.startsWith(richContentPrefix) ? sanitizeRichHtml(rawContent.slice(richContentPrefix.length)) : escapeHtml(rawContent);
         const words = (plainContent.textContent || '').trim().split(/\s+/).filter(Boolean).length;
         const minutes = Math.max(1, Math.ceil(words / 220));
-        return `<a class="post-card${index === 0 ? ' post-card-featured' : ''}" href="post.html?slug=${encodeURIComponent(post.slug)}"><div class="post-byline"><span class="mini-avatar">a</span><span>Alper Calisir</span><span class="meta-dot">·</span><time datetime="${escapeHtml(post.published_at)}">${dateLabel(post.published_at)}</time></div><h3>${escapeHtml(post.title)}</h3><p class="post-excerpt">${escapeHtml(post.excerpt || '')}</p><div class="post-card-bottom"><span class="read-time">${minutes} dk okuma</span><span class="read-more">Yazıyı oku <span aria-hidden="true">→</span></span></div></a>`;
+        return `<a class="post-card${index === 0 ? ' post-card-featured' : ''}" href="post.html?slug=${encodeURIComponent(post.slug)}"><div class="post-byline"><span class="mini-avatar">a</span><span>Alper Calisir</span><span class="meta-dot">·</span><time datetime="${escapeHtml(post.published_at)}">${dateLabel(post.published_at)}</time></div><h3>${escapeHtml(post.title)}</h3><p class="post-excerpt">${escapeHtml(post.excerpt || '')}</p><div class="post-card-bottom"><span class="read-time">${minutes} min read</span><span class="read-more">Read story <span aria-hidden="true">→</span></span></div></a>`;
       }).join('');
     };
     search.addEventListener('input', render);
@@ -224,13 +224,13 @@
   async function loadPost() {
     const slug = new URLSearchParams(location.search).get('slug');
     const root = document.querySelector('[data-article]');
-    if (!slug) { root.innerHTML = '<p class="empty">Yazı bulunamadı.</p>'; return; }
+    if (!slug) { root.innerHTML = '<p class="empty">Story not found.</p>'; return; }
     try {
       const posts = await api(`/rest/v1/blog_posts?select=title,excerpt,content,published_at&slug=eq.${encodeURIComponent(slug)}&status=eq.published&limit=1`);
-      if (!posts.length) throw new Error('Bu yazı bulunamadı.');
+      if (!posts.length) throw new Error('This story could not be found.');
       const post = posts[0];
-      document.title = `${post.title} — Alper’in yazıları`;
-      root.innerHTML = `<div class="eyebrow">Alper’in yazıları</div><h1>${escapeHtml(post.title)}</h1><p class="lead">${escapeHtml(post.excerpt)}</p><div class="meta">${dateLabel(post.published_at)}</div><div class="article-body">${renderContent(post.content)}</div>`;
+      document.title = `${post.title} — Stories by Alper`;
+      root.innerHTML = `<div class="eyebrow">Stories by Alper</div><h1>${escapeHtml(post.title)}</h1><p class="lead">${escapeHtml(post.excerpt)}</p><div class="meta">${dateLabel(post.published_at)}</div><div class="article-body">${renderContent(post.content)}</div>`;
     } catch (error) { root.innerHTML = `<p class="empty">${escapeHtml(error.message)}</p>`; }
   }
 
@@ -313,7 +313,7 @@
     const data = formValues();
     localStorage.setItem('alper-blog-draft', JSON.stringify({ ...data, id: currentPost?.id || null, saved_at: new Date().toISOString() }));
     const state = document.querySelector('[data-save-state]');
-    if (state) state.textContent = 'Taslak bu cihazda kaydedildi';
+    if (state) state.textContent = 'Draft saved on this device';
   }
 
   function queueDraft() {
@@ -324,8 +324,8 @@
   async function savePost(publish) {
     if (!session?.user?.id) throw new Error('Önce giriş yapın.');
     const post = formValues();
-    if (!post.title) throw new Error('Yayınlamak için başlık ekleyin.');
-    if (publish && !post.content.trim()) throw new Error('Yayınlamak için yazı içeriği ekleyin.');
+    if (!post.title) throw new Error('Add a title before saving.');
+    if (publish && !post.content.trim()) throw new Error('Add story content before publishing.');
     const now = new Date().toISOString();
     const payload = { ...post, author_id: session.user.id, status: publish ? 'published' : 'draft', updated_at: now };
     if (publish) payload.published_at = currentPost?.published_at || now;
@@ -343,13 +343,13 @@
   async function initWriter() {
     const loginPanel = document.querySelector('[data-login-panel]');
     const writerPanel = document.querySelector('[data-writer-panel]');
-    if (!ready) showNotice('Yayın sistemi kuruluma hazır değil. Supabase ayarlarını blog/config.js dosyasına girin ve blog/setup.sql dosyasını çalıştırın.', true);
+    if (!ready) showNotice('Publishing is not configured yet. Add your Supabase settings in blog/config.js and run blog/setup.sql.', true);
     if (session?.user?.id) {
       loginPanel.hidden = true;
       writerPanel.hidden = false;
       document.querySelector('[data-logout]').hidden = false;
       const user = document.querySelector('[data-user]');
-      user.textContent = session.user.email || 'Giriş yapıldı';
+      user.textContent = session.user.email || 'Signed in';
       const params = new URLSearchParams(location.search);
       const id = params.get('id');
       if (id) {
@@ -375,7 +375,7 @@
     const root = document.querySelector('[data-dashboard-posts]');
     try {
       const posts = await api('/rest/v1/blog_posts?select=id,title,status,updated_at&order=updated_at.desc', {}, true);
-      root.innerHTML = posts.length ? posts.map(post => `<a class="post-card" href="write.html?id=${encodeURIComponent(post.id)}"><h2>${escapeHtml(post.title || 'Başlıksız yazı')}</h2><span class="meta">${post.status === 'published' ? 'Yayında' : 'Taslak'} · ${dateLabel(post.updated_at)}</span></a>`).join('') : '<p class="empty">Henüz yazı yok. İlk yazını yukarıdan başlat.</p>';
+      root.innerHTML = posts.length ? posts.map(post => `<a class="post-card" href="write.html?id=${encodeURIComponent(post.id)}"><h2>${escapeHtml(post.title || 'Untitled story')}</h2><span class="meta">${post.status === 'published' ? 'Published' : 'Draft'} · ${dateLabel(post.updated_at)}</span></a>`).join('') : '<p class="empty">No stories yet. Start writing above.</p>';
     } catch (error) { showNotice(error.message, true); }
   }
 
@@ -384,10 +384,10 @@
     const email = document.querySelector('[name=email]').value.trim();
     const password = document.querySelector('[name=password]').value;
     try {
-      showNotice('Giriş yapılıyor…');
+      showNotice('Signing in…');
       const result = await api('/auth/v1/token?grant_type=password', { method: 'POST', body: JSON.stringify({ email, password }) });
       storeSession(result);
-      showNotice('Giriş başarılı.');
+      showNotice('Signed in successfully.');
       await initWriter();
     } catch (error) { showNotice(error.message, true); }
   }
@@ -408,12 +408,12 @@
     document.querySelector('[data-editor-body]').addEventListener('paste', pasteRichText);
     document.querySelectorAll('[data-format]').forEach(button => button.addEventListener('mousedown', event => event.preventDefault()));
     document.querySelector('[data-save]').addEventListener('click', async () => {
-      try { await savePost(false); showNotice('Taslak hesabınıza kaydedildi.'); await loadDashboardPosts(); }
-      catch (error) { collectDraft(); showNotice(`${error.message} Taslak bu cihazda saklandı.`, true); }
+      try { await savePost(false); showNotice('Draft saved to your account.'); await loadDashboardPosts(); }
+      catch (error) { collectDraft(); showNotice(`${error.message} A copy is saved on this device.`, true); }
     });
     document.querySelector('[data-publish]').addEventListener('click', async () => {
-      try { const post = await savePost(true); showNotice('Yazı yayınlandı.'); await loadDashboardPosts(); if (post) { const open = document.querySelector('[data-open-post]'); open.href = `post.html?slug=${encodeURIComponent(post.slug)}`; open.hidden = false; } }
-      catch (error) { collectDraft(); showNotice(`${error.message} Taslak bu cihazda saklandı.`, true); }
+      try { const post = await savePost(true); showNotice('Story published.'); await loadDashboardPosts(); if (post) { const open = document.querySelector('[data-open-post]'); open.href = `post.html?slug=${encodeURIComponent(post.slug)}`; open.hidden = false; } }
+      catch (error) { collectDraft(); showNotice(`${error.message} A copy is saved on this device.`, true); }
     });
   }
 })();
