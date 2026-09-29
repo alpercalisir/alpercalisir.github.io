@@ -427,20 +427,17 @@ const commands = {
   },
   blog: {
     desc: "open the blog",
-    fn: () => `
-  <span class="bold white">📝 Alper’s blog</span>
-
-  • <a href="blog/" target="_blank" rel="noopener">read the published posts</a>
-  • type <span class="cmd">write</span> to open the writing desk
-`,
+    fn: () => {
+      window.location.assign("blog/");
+      return "";
+    },
   },
   write: {
     desc: "open the writing desk",
-    fn: () => `
-  <span class="bold white">Writing desk</span>
-
-  <a href="blog/write.html" target="_blank" rel="noopener">sign in and write a post</a>
-`,
+    fn: () => {
+      window.location.assign("blog/write.html");
+      return "";
+    },
   },
   tldr: {
     desc: "ultra-short bio",
