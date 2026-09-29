@@ -52,12 +52,9 @@
   }
 
   function markdown(source) {
-    const blocks = String(source || '').replace(/\r/g, '').split(/\n\s*\n/);
-    return blocks.map(block => {
+    const textBlocks = text => text.split(/\n\s*\n/).map(block => {
       const trimmed = block.trim();
       if (!trimmed) return '';
-      const code = trimmed.match(/^```([^\n]*)\n([\s\S]*?)\n```$/);
-      if (code) return `<pre><code>${escapeHtml(code[2])}</code></pre>`;
       const heading = trimmed.match(/^(#{1,3})\s+(.+)$/);
       if (heading) { const level = heading[1].length; return `<h${level}>${inlineMarkdown(heading[2])}</h${level}>`; }
       if (/^([-*_])\1\1+$/.test(trimmed)) return '<hr>';
@@ -69,6 +66,20 @@
       }
       return `<p>${trimmed.split('\n').map(inlineMarkdown).join('<br>')}</p>`;
     }).join('\n');
+
+    const content = String(source || '').replace(/\r/g, '');
+    const codeBlocks = /```([^\n]*)\n([\s\S]*?)\n```/g;
+    let html = '';
+    let cursor = 0;
+    let match;
+    while ((match = codeBlocks.exec(content))) {
+      html += textBlocks(content.slice(cursor, match.index));
+      const language = match[1].trim();
+      const languageAttribute = /^[a-z0-9_+-]{1,24}$/i.test(language) ? ` data-language="${language}"` : '';
+      html += `<pre${languageAttribute}><code>${escapeHtml(match[2])}</code></pre>`;
+      cursor = codeBlocks.lastIndex;
+    }
+    return html + textBlocks(content.slice(cursor));
   }
 
   function slugify(text) {
@@ -135,6 +146,29 @@
     preview.hidden = editing;
     if (!editing) preview.innerHTML = markdown(editor.value);
     document.querySelectorAll('[data-mode]').forEach(button => button.classList.toggle('active', button.dataset.mode === mode));
+  }
+
+  function insertFormatting(format) {
+    const editor = document.querySelector('[data-editor-body]');
+    const start = editor.selectionStart;
+    const end = editor.selectionEnd;
+    const selected = editor.value.slice(start, end);
+    const wrappers = { bold: ['**', '**', 'kalın metin'], italic: ['*', '*', 'italik metin'], 'inline-code': ['`', '`', 'code'] };
+    let insertion;
+    let cursor;
+    if (format === 'code-block') {
+      insertion = selected ? `\n\`\`\`text\n${selected}\n\`\`\`\n` : '\n```text\n\n```\n';
+      cursor = selected ? start + insertion.length : start + '\n```text\n'.length;
+    } else {
+      const [prefix, suffix, placeholder] = wrappers[format] || wrappers.bold;
+      const text = selected || placeholder;
+      insertion = `${prefix}${text}${suffix}`;
+      cursor = selected ? start + insertion.length : start + prefix.length + placeholder.length;
+    }
+    editor.setRangeText(insertion, start, end, 'select');
+    if (!selected || format !== 'code-block') editor.setSelectionRange(cursor, cursor);
+    editor.dispatchEvent(new Event('input', { bubbles: true }));
+    editor.focus();
   }
 
   function readDraft() {
@@ -240,6 +274,7 @@
     });
     document.querySelector('[data-new]').addEventListener('click', () => { currentPost = null; localStorage.removeItem('alper-blog-draft'); document.querySelector('[data-title]').value = ''; document.querySelector('[data-excerpt]').value = ''; document.querySelector('[data-editor-body]').value = ''; history.replaceState(null, '', 'write.html'); document.querySelector('[data-title]').focus(); });
     document.querySelectorAll('[data-mode]').forEach(button => button.addEventListener('click', () => setEditorMode(button.dataset.mode)));
+    document.querySelectorAll('[data-format]').forEach(button => button.addEventListener('click', () => insertFormatting(button.dataset.format)));
     document.querySelectorAll('[data-title], [data-excerpt], [data-editor-body]').forEach(input => input.addEventListener('input', queueDraft));
     document.querySelector('[data-save]').addEventListener('click', async () => {
       try { await savePost(false); showNotice('Taslak hesabınıza kaydedildi.'); await loadDashboardPosts(); }
