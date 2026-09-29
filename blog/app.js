@@ -81,12 +81,37 @@
 
   async function loadPosts() {
     const list = document.querySelector('[data-post-list]');
+    const count = document.querySelector('[data-post-count]');
+    let posts = [];
+    let loadFailed = false;
     try {
-      const posts = await api('/rest/v1/blog_posts?select=slug,title,excerpt,published_at&status=eq.published&order=published_at.desc');
-      list.innerHTML = posts.length ? posts.map(post => `<a class="post-card" href="post.html?slug=${encodeURIComponent(post.slug)}"><h2>${escapeHtml(post.title)}</h2><p>${escapeHtml(post.excerpt)}</p><span class="meta">${dateLabel(post.published_at)}</span></a>`).join('') : '<p class="empty">Henüz yayınlanmış yazı yok.</p>';
+      posts = await api('/rest/v1/blog_posts?select=slug,title,excerpt,content,published_at&status=eq.published&order=published_at.desc');
     } catch (error) {
-      list.innerHTML = `<p class="empty">${escapeHtml(error.message)}</p>`;
+      console.warn('Blog posts could not be loaded:', error.message);
+      loadFailed = true;
     }
+
+    const search = document.querySelector('[data-search]');
+    const render = () => {
+      const query = search.value.trim().toLocaleLowerCase('tr');
+      const visiblePosts = posts.filter(post => `${post.title} ${post.excerpt} ${post.content}`.toLocaleLowerCase('tr').includes(query));
+      count.textContent = visiblePosts.length ? `${visiblePosts.length} yazı` : '';
+      if (!visiblePosts.length) {
+        const isSearch = Boolean(query);
+        const title = loadFailed ? 'Yazılar şu an yüklenemiyor.' : isSearch ? 'Bir şey bulamadık.' : 'İlk yazı yolda.';
+        const message = loadFailed ? 'Biraz sonra yeniden deneyebilirsin.' : isSearch ? 'Başka bir kelimeyle aramayı deneyebilirsin.' : 'Alper yeni yazılar hazırlıyor. Yayınlandıklarında burada görebilirsin.';
+        list.innerHTML = `<div class="empty-state"><div class="empty-art" aria-hidden="true">${loadFailed ? '↻' : isSearch ? '⌕' : '✳'}</div><h3>${title}</h3><p>${message}</p>${isSearch && !loadFailed ? '<button class="text-link clear-search" type="button" data-clear-search>Aramayı temizle <span aria-hidden="true">→</span></button>' : '<a class="text-link" href="../">Ana sayfaya dön <span aria-hidden="true">→</span></a>'}</div>`;
+        list.querySelector('[data-clear-search]')?.addEventListener('click', () => { search.value = ''; render(); search.focus(); });
+        return;
+      }
+      list.innerHTML = visiblePosts.map((post, index) => {
+        const words = `${post.content || ''}`.trim().split(/\s+/).filter(Boolean).length;
+        const minutes = Math.max(1, Math.ceil(words / 220));
+        return `<a class="post-card${index === 0 ? ' post-card-featured' : ''}" href="post.html?slug=${encodeURIComponent(post.slug)}"><div class="post-byline"><span class="mini-avatar">a</span><span>Alper Calisir</span><span class="meta-dot">·</span><time datetime="${escapeHtml(post.published_at)}">${dateLabel(post.published_at)}</time></div><h3>${escapeHtml(post.title)}</h3><p class="post-excerpt">${escapeHtml(post.excerpt || '')}</p><div class="post-card-bottom"><span class="read-time">${minutes} dk okuma</span><span class="read-more">Yazıyı oku <span aria-hidden="true">→</span></span></div></a>`;
+      }).join('');
+    };
+    search.addEventListener('input', render);
+    render();
   }
 
   async function loadPost() {
