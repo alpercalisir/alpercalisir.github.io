@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Yazı alanı — Alper Calisir</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="write">
+  <main class="editor-shell">
+    <header class="editor-top"><a class="brand" href="index.html">alper calisir · yazılar</a><div class="editor-actions"><span data-user></span><button class="button ghost" type="button" data-logout hidden>Çıkış</button><a class="button" href="index.html" data-open-post hidden>Yazıyı gör</a></div></header>
+    <div class="notice" data-notice hidden></div>
+    <section class="page narrow" data-login-panel hidden>
+      <div class="eyebrow">Yazar alanı</div><h1>Yazmaya başla.</h1><p class="intro">Hesabınla giriş yap ve yazını düzenleyip yayınla.</p>
+      <form class="auth-card" data-login-form><h2>Giriş yap</h2><p>Yazar hesabı Supabase panelinden önceden oluşturulur.</p><label class="field-label" for="email">E-posta</label><input class="field" id="email" name="email" type="email" autocomplete="username" required><label class="field-label" for="password">Şifre</label><input class="field" id="password" name="password" type="password" autocomplete="current-password" required><button class="button" type="submit">Giriş yap</button></form>
+    </section>
+    <section data-writer-panel hidden>
+      <div class="editor-main">
+        <div class="toolbar"><span data-save-state>Değişiklikler otomatik olarak bu cihaza kaydedilir</span><button class="button ghost" type="button" data-new>Yeni yazı</button></div>
+        <textarea class="editor-title" data-title rows="2" placeholder="Başlık" aria-label="Yazı başlığı"></textarea>
+        <textarea class="editor-excerpt" data-excerpt placeholder="Kısa bir giriş yazısı ekle…" aria-label="Yazı özeti"></textarea>
+        <div class="toolbar"><div class="switch"><button type="button" class="active" data-mode="write">Yaz</button><button type="button" data-mode="preview">Önizleme</button></div><span>Markdown desteklenir</span></div>
+        <textarea class="editor-body" data-editor-body placeholder="Aklındaki fikirleri yaz…&#10;&#10;## Bir başlık&#10;&#10;Paragraflarını burada oluştur. **Kalın**, *italik*, bağlantı ve kod blokları kullanabilirsin." aria-label="Yazı içeriği"></textarea>
+        <div class="preview" data-preview hidden></div>
+        <div class="toolbar"><span>Taslaklar hesabında saklanır.</span><div class="editor-actions"><button class="button secondary" type="button" data-save>Taslağı kaydet</button><button class="button" type="button" data-publish>Yayınla</button></div></div>
+        <div class="post-list" data-dashboard-posts></div>
+      </div>
+    </section>
+  </main>
+  <script src="config.js"></script><script src="app.js"></script>
+</body>
+</html>

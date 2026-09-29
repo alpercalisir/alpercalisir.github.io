@@ -6,6 +6,7 @@
 
 - **Frontend**: GitHub Pages static site (HTML/CSS/JS)
 - **Backend**: Cloudflare Worker + KV for persistent game scores
+- **Blog backend**: Supabase Auth + Postgres, configured in `blog/config.js`
 - **Games**: Tetris, Snake, Space Invaders (with online leaderboards)
 
 ## Architecture
@@ -15,8 +16,9 @@
 - `assets/js/terminal.js` - Main CLI engine (1477 lines), handles command parsing & execution
 - `assets/css/styles.css` - Design system with 5 themes (midnight/phosphor/amber/matrix/contrast)
 - `standings.js` - External API integration (fetches Fenerbahçe standings from football-standings-api)
-- `blog/posts.json` - Blog metadata index (slug, title, date, excerpt)
-- `blog/posts/*.md` - Individual blog posts in markdown format
+- `blog/index.html` - Public blog index
+- `blog/post.html` - Public article page
+- `blog/write.html` - Author sign-in and writing editor
 
 ### Backend Layer (`/worker`)
 - **Cloudflare Worker** (`leaderboard.js`) - REST API for game scores
@@ -31,7 +33,7 @@
 
 Key commands:
 - **Info**: `whoami`, `now`, `prev` (career timeline)
-- **Content**: `search [term]`, `blog [slug]` (markdown posts), `tetris` (game launcher)
+- **Content**: `search [term]`, `blog` (published posts), `write` (author editor), `tetris` (game launcher)
 - **Contact**: `contact`, `newsletter`
 - **Terminal**: `theme`, `clear`, `music`
 
@@ -82,12 +84,11 @@ curl -X POST https://bentossell-leaderboard.bentossell.workers.dev/scores/snake 
 - **Leaderboard Worker**: CORS-enabled, JSON validation, numeric constraints
 
 ### Blog System
-- Markdown posts stored as `.md` files in `blog/posts/` directory
-- Post metadata in `blog/posts.json` (slug, title, date, excerpt)
-- Uses `marked.js` library (CDN) for markdown-to-HTML parsing
-- Blog command: `blog` lists posts, `blog [slug]` displays specific post
-- HTML output converted to terminal-friendly format with CSS classes (bold, muted, cmd)
-- Supports markdown: h1-h3 headings, bold, emphasis, code blocks, lists
+- `blog/app.js` handles Supabase Auth, post CRUD, Markdown preview, and local draft recovery
+- `blog/setup.sql` defines post/author tables and Row Level Security policies
+- Only UUIDs present in `blog_authors` may create or edit posts
+- Configure the public project URL and anon/publishable key in `blog/config.js`
+- `blog/SETUP.md` has one-time service setup steps
 
 ### Game Integration
 - Games added as terminal commands that execute embedded game logic
@@ -105,8 +106,12 @@ curl -X POST https://bentossell-leaderboard.bentossell.workers.dev/scores/snake 
 │   ├── css/styles.css                (709 lines, all themes)
 │   └── js/terminal.js                (1477 lines, command engine)
 ├── blog/
-│   ├── posts.json                    (blog metadata index)
-│   └── posts/                        (individual .md files)
+│   ├── index.html                    (public blog)
+│   ├── post.html                     (article page)
+│   ├── write.html                    (author editor)
+│   ├── app.js                         (auth and post UI)
+│   ├── setup.sql                      (Supabase schema and policies)
+│   └── SETUP.md                       (service setup)
 └── worker/
     ├── leaderboard.js                (REST API, KV storage)
     ├── wrangler.toml                 (CF Worker config)
@@ -135,7 +140,7 @@ curl -X POST https://bentossell-leaderboard.bentossell.workers.dev/scores/snake 
 ## When Adding Features
 
 - **New commands**: Add to `commands` object in terminal.js, return HTML string
-- **New blog posts**: Create `.md` file in `blog/posts/` and add entry to `blog/posts.json`
+- **New blog posts**: Write and publish through `blog/write.html`; posts live in Supabase
 - **New games**: Add command entry + game logic, add game name to `VALID_GAMES` in leaderboard.js
 - **New themes**: Add CSS vars to `:root`, add name to `themes` array in terminal.js
 - **API changes**: Update both leaderboard.js and any fetch calls in terminal.js

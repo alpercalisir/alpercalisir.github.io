@@ -63,7 +63,8 @@ const commands = {
         "",
         '  <span class="muted">--- content ---</span>',
         '  <span class="cmd">search [term]</span> search site content',
-        '  <span class="cmd">blog [slug]</span>  read blog posts',
+        '  <span class="cmd">blog</span>        open blog',
+        '  <span class="cmd">write</span>       open the writing desk',
         '  <span class="cmd">tetris</span>        :)',
         "",
         '  <span class="muted">--- contact ---</span>',
@@ -425,99 +426,21 @@ const commands = {
     },
   },
   blog: {
-    desc: "read blog posts",
-    fn: async (args) => {
-      try {
-        // Fetch blog posts metadata
-        const response = await fetch('blog/posts.json');
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status} when fetching posts.json`);
-        }
-        
-        let posts;
-        try {
-          posts = await response.json();
-        } catch (e) {
-          throw new Error(`Invalid JSON in posts.json: ${e.message}`);
-        }
+    desc: "open the blog",
+    fn: () => `
+  <span class="bold white">📝 Alper’s blog</span>
 
-        if (!Array.isArray(posts)) {
-          throw new Error('posts.json must contain an array');
-        }
+  • <a href="blog/" target="_blank" rel="noopener">read the published posts</a>
+  • type <span class="cmd">write</span> to open the writing desk
+`,
+  },
+  write: {
+    desc: "open the writing desk",
+    fn: () => `
+  <span class="bold white">Writing desk</span>
 
-        if (!args || args.length === 0) {
-          // List all posts, sorted by date descending (newest first)
-          const sortedPosts = [...posts].sort((a, b) => {
-            return new Date(b.date) - new Date(a.date);
-          });
-          
-          let output = '\n  <span class="bold white">📝 Blog Posts</span>\n\n';
-          if (sortedPosts.length === 0) {
-            output += '  <span class="muted">no posts yet</span>\n';
-          } else {
-            sortedPosts.forEach(post => {
-              output += `  • <span class="cmd">${post.slug}</span> — ${post.title} (${post.date})\n`;
-            });
-          }
-          output += `\n  <span class="muted">usage: blog [slug]</span>\n`;
-          return output;
-        }
-
-        // Display specific post
-        const slug = args[0];
-        const post = posts.find(p => p.slug === slug);
-        if (!post) {
-          return `\n  <span class="error">post not found: ${slug}</span>\n`;
-        }
-
-        // Fetch markdown content
-        const mdResponse = await fetch(`blog/posts/${slug}.md`);
-        if (!mdResponse.ok) {
-          throw new Error(`HTTP ${mdResponse.status} when fetching ${slug}.md`);
-        }
-        
-        const markdown = await mdResponse.text();
-
-        // Parse markdown to HTML (marked is loaded globally from CDN)
-        if (typeof marked === 'undefined') {
-          throw new Error('Markdown parser not loaded - check browser console');
-        }
-        const html = marked.parse(markdown);
-
-        // Convert HTML to terminal-friendly format with CSS classes
-        let output = '\n  <span class="bold white">' + post.title + '</span>\n';
-        output += '  <span class="muted">' + post.date + '</span>\n\n';
-        
-        // Convert HTML content to terminal text with styling
-        const lines = html
-          .split('\n')
-          .map(line => {
-            // Convert h1-h3 to bold white
-            line = line.replace(/<h[123]>/g, '<span class="bold white">').replace(/<\/h[123]>/g, '</span>');
-            // Convert strong to bold
-            line = line.replace(/<strong>/g, '<span class="bold">').replace(/<\/strong>/g, '</span>');
-            // Convert em to muted
-            line = line.replace(/<em>/g, '<span class="muted">').replace(/<\/em>/g, '</span>');
-            // Remove p tags but keep content
-            line = line.replace(/<p>/g, '').replace(/<\/p>/g, '');
-            // Convert ul/li to bullet points
-            line = line.replace(/<ul>/g, '').replace(/<\/ul>/g, '');
-            line = line.replace(/<li>/g, '  • ').replace(/<\/li>/g, '');
-            // Convert code blocks
-            line = line.replace(/<code>/g, '<span class="cmd">').replace(/<\/code>/g, '</span>');
-            // Remove other tags
-            line = line.replace(/<[^>]*>/g, '');
-            return '  ' + line.trim();
-          })
-          .filter(line => line.trim() !== '  ');
-
-        output += lines.join('\n') + '\n';
-        return output;
-      } catch (err) {
-        console.error('Blog error:', err);
-        return '\n  <span class="error">failed to load blog: ' + err.message + '</span>\n';
-      }
-    },
+  <a href="blog/write.html" target="_blank" rel="noopener">sign in and write a post</a>
+`,
   },
   tldr: {
     desc: "ultra-short bio",
