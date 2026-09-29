@@ -16,3 +16,5 @@ GitHub Pages serves the site as static files. Supabase provides author login and
 6. Push the changes to GitHub Pages. The editor will be available at `/blog/write.html`; the public blog is `/blog/`.
 
 The row-level security policies let visitors read published posts. Only users added to `blog_authors` can read or edit drafts and publish posts. The editor has no public sign-up form. Drafts are also kept in the browser so text remains available if the database is not configured or temporarily unreachable.
+
+The editor accepts rich text pasted from Medium and keeps common formatting such as headings, emphasis, links, lists, quotes, tables, images, and code blocks. Pasted markup is filtered before it is saved or displayed.

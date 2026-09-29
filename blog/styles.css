@@ -48,8 +48,16 @@ h1 { font-size: clamp(36px, 6vw, 60px); line-height: 1.08; letter-spacing: -2px;
 .editor-title { width: 100%; border: 0; outline: 0; resize: none; font: 42px/1.18 Georgia, serif; letter-spacing: -1.3px; color: var(--ink); min-height: 60px; }
 .editor-title::placeholder { color: #c8c8c8; }
 .editor-excerpt { width: 100%; border: 0; outline: 0; resize: vertical; min-height: 54px; color: #777; font: 18px/1.45 Arial, sans-serif; margin: 14px 0 24px; }
-.editor-body { width: 100%; min-height: 55vh; resize: vertical; outline: none; border: 0; border-top: 1px solid var(--line); padding-top: 22px; color: #333; font: 18px/1.75 Georgia, serif; }
-.editor-body::placeholder { color: #aaa; }
+.editor-body { width: 100%; min-height: 55vh; outline: none; border: 0; border-top: 1px solid var(--line); padding: 22px 0; color: #333; font: 18px/1.75 Georgia, serif; overflow-wrap: anywhere; }
+.editor-body:empty::before { content: attr(data-placeholder); color: #aaa; pointer-events: none; }
+.editor-body:focus { border-top-color: #c6d8c8; }
+.editor-body p { margin: 0 0 1.15em; }
+.editor-body h1,.editor-body h2,.editor-body h3 { margin: 1.25em 0 .55em; line-height: 1.2; }
+.editor-body blockquote { margin: 1.4em 0; padding-left: 20px; border-left: 3px solid #8cb99a; color: #5b665d; }
+.editor-body img { display: block; max-width: 100%; height: auto; margin: 18px auto; border-radius: 4px; }
+.editor-body code:not(pre code) { padding: 2px 5px; border-radius: 4px; background: #eff2ee; color: #305b3e; font: .85em 'SFMono-Regular', Consolas, 'Liberation Mono', monospace; }
+.editor-body table,.preview table,.article-body table { width: 100%; border-collapse: collapse; margin: 1.5em 0; font: 15px/1.5 Arial, sans-serif; }
+.editor-body th,.editor-body td,.preview th,.preview td,.article-body th,.article-body td { padding: 10px 12px; border: 1px solid var(--line); text-align: left; }
 .preview { border-top: 1px solid var(--line); padding-top: 22px; min-height: 250px; font: 18px/1.75 Georgia, serif; overflow-wrap: anywhere; }
 .preview h1,.preview h2,.preview h3 { letter-spacing: -.7px; line-height: 1.2; }
 .preview pre { background: #f4f4f4; padding: 16px; overflow: auto; font-size: 14px; }
@@ -148,8 +156,10 @@ h1 { font-size: clamp(36px, 6vw, 60px); line-height: 1.08; letter-spacing: -2px;
 .format-bar button:hover,.format-bar button:focus-visible { background: #edf2ed; outline: none; }
 .format-bar button code { font-size: 12px; }
 .article-body pre,.preview pre { position: relative; margin: 22px 0; padding: 38px 22px 22px; overflow: auto; border: 1px solid #26352c; border-radius: 8px; background: #18221c; color: #e2ebe4; font: 14px/1.7 'SFMono-Regular', Consolas, 'Liberation Mono', monospace; tab-size: 2; }
+.editor-body pre { position: relative; margin: 22px 0; padding: 38px 18px 18px; overflow: auto; border: 1px solid #26352c; border-radius: 8px; background: #18221c; color: #e2ebe4; font: 14px/1.7 'SFMono-Regular', Consolas, 'Liberation Mono', monospace; tab-size: 2; }
 .article-body pre code,.preview pre code { padding: 0; background: transparent; color: inherit; font: inherit; }
-.article-body pre[data-language]::before,.preview pre[data-language]::before { content: attr(data-language); position: absolute; top: 11px; left: 14px; color: #9eb7a3; font: 10px Arial, sans-serif; letter-spacing: .7px; text-transform: uppercase; }
+.editor-body pre code { padding: 0; background: transparent; color: inherit; font: inherit; }
+.article-body pre[data-language]::before,.preview pre[data-language]::before,.editor-body pre[data-language]::before { content: attr(data-language); position: absolute; top: 11px; left: 14px; color: #9eb7a3; font: 10px Arial, sans-serif; letter-spacing: .7px; text-transform: uppercase; }
 .article-body code:not(pre code),.preview code:not(pre code) { padding: 2px 5px; border-radius: 4px; background: #eff2ee; color: #305b3e; font: .85em 'SFMono-Regular', Consolas, 'Liberation Mono', monospace; }
 .footer { display: flex; align-items: center; justify-content: center; gap: 22px; color: #898f88; font: 12px Arial, sans-serif; }
 .footer a { color: #56735f; text-decoration: none; }
